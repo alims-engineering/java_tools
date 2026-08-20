@@ -5,7 +5,7 @@
 build/
 
 # ====================================
-# Gradle Wrapper
+# Gradle Wrapper - needs
 # ====================================
 !gradle/wrapper/gradle-wrapper.jar
 !gradle/wrapper/gradle-wrapper.properties
