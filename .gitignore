@@ -2,13 +2,25 @@
 # Gradle
 # ====================================
 .gradle/
-build/
 
 # ====================================
-# Gradle Wrapper - needs
+# Java
+# ====================================
+*.class
+
+# ====================================
+# Gradle Wrapper - needs!!!
 # ====================================
 !gradle/wrapper/gradle-wrapper.jar
 !gradle/wrapper/gradle-wrapper.properties
+
+# ====================================
+# Generated files
+# ====================================
+bin/
+build/
+out/
+target/
 
 # ====================================
 # IntelliJ IDEA

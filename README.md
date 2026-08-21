@@ -20,7 +20,7 @@ Then, in your `build.gradle`, add:
 
 ```groovy
 dependencies {
-    implementation "com.alims:java_tools"
+    implementation "com.alims:java_tools:1.0.0"
 }
 ```
 
@@ -31,7 +31,7 @@ If your `settings.gradle.kts`, add:
 ```kotlin
 sourceControl {
     gitRepository("https://github.com/alims-engineering/java_tools.git") {
-        producesModule("com.alims:java_tools")
+        producesModule("com.alims:java_tools:1.0.0")
     }
 }
 ```
