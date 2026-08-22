@@ -1,13 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.alims.javatools.core.container.standard.model;
 
-/**
- *
- * @author vsgm0
- */
-public class SingleConnectionNode {
-    
+import com.alims.javatools.core.container.standard.interfaces.Node;
+import com.alims.javatools.core.container.standard.base.AbstractSingleConnectionNode;
+
+public class SingleConnectionNode<V>
+        extends AbstractSingleConnectionNode<V> {
+
+    // ====================================
+    //  Constructor
+    // ====================================
+    public SingleConnectionNode(V value) {
+        super(value);
+    }
+
+    public SingleConnectionNode(V value, Node<V> connection) {
+        super(value, connection);
+    }
+
+    @Override
+    public Node<V> createSelf(V value) {
+        return new SingleConnectionNode<>(value);
+    }
 }
