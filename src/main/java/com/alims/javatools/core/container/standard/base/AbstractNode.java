@@ -1,3 +1,5 @@
+package com.alims.javatools.core.container.standard.base;
+
 import java.util.Objects;
 import com.alims.javatools.core.container.standard.interfaces.Node;
 
