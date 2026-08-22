@@ -1,7 +1,7 @@
-package com.alims.javatools.core.container.standard.model;
+package com.alims.javatools.core.container.standard.model.node;
 
-import com.alims.javatools.core.container.standard.interfaces.Node;
-import com.alims.javatools.core.container.standard.base.AbstractSingleConnectionNode;
+import com.alims.javatools.core.container.standard.interfaces.node.Node;
+import com.alims.javatools.core.container.standard.base.node.AbstractSingleConnectionNode;
 
 public class SingleConnectionNode<V>
         extends AbstractSingleConnectionNode<V> {

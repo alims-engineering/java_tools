@@ -1,6 +1,6 @@
-package com.alims.javatools.core.container.standard.model;
+package com.alims.javatools.core.container.standard.model.node;
 
-import com.alims.javatools.core.container.standard.interfaces.Node;
+import com.alims.javatools.core.container.standard.interfaces.node.Node;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,16 +9,16 @@ class SingleConnectionNodeTest {
 
     @Test
     void shouldCreateNode() {
-        SingleConnectionNode<String> node =
-                new SingleConnectionNode<>("A");
+        SingleConnectionNode<String> node
+                = new SingleConnectionNode<>("A");
 
         assertEquals("A", node.getValue());
     }
 
     @Test
     void shouldCreateSelf() {
-        SingleConnectionNode<String> node =
-                new SingleConnectionNode<>("A");
+        SingleConnectionNode<String> node
+                = new SingleConnectionNode<>("A");
 
         Node<String> newNode = node.createSelf("B");
 
@@ -29,8 +29,8 @@ class SingleConnectionNodeTest {
 
     @Test
     void shouldAppendNode() {
-        SingleConnectionNode<String> node =
-                new SingleConnectionNode<>("A");
+        SingleConnectionNode<String> node
+                = new SingleConnectionNode<>("A");
 
         Node<String> next = node.append("B");
 

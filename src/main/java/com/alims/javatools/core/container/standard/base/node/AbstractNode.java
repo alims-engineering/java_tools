@@ -1,7 +1,7 @@
-package com.alims.javatools.core.container.standard.base;
+package com.alims.javatools.core.container.standard.base.node;
 
 import java.util.Objects;
-import com.alims.javatools.core.container.standard.interfaces.Node;
+import com.alims.javatools.core.container.standard.interfaces.node.Node;
 
 public abstract class AbstractNode<V>
         implements Node<V> {

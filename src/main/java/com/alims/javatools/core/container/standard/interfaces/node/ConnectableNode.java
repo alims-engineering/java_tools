@@ -1,4 +1,4 @@
-package com.alims.javatools.core.container.standard.interfaces;
+package com.alims.javatools.core.container.standard.interfaces.node;
 
 public interface ConnectableNode<V> extends Node<V> {
 
