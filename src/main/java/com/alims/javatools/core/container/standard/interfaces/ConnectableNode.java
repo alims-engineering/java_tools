@@ -4,7 +4,7 @@ public interface ConnectableNode<V> extends Node<V> {
 
     boolean connect(Node<V> other);
 
-    Node<V> append(V element);
+    Node<V> append(V value);
 
     Node<V> disconnect(Node<V> other);
 
