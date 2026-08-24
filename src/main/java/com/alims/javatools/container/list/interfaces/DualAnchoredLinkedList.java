@@ -7,7 +7,4 @@ public interface DualAnchoredLinkedList<
         Node extends ConnectableNode<V, Node> //
         > extends MultiAnchoredLinkedList<V, Node> {
 
-    Node getFirstAnchor();
-
-    Node getSecondAnchor();
 }

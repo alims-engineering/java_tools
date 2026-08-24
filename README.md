@@ -31,7 +31,7 @@ If your `settings.gradle.kts`, add:
 ```kotlin
 sourceControl {
     gitRepository("https://github.com/alims-engineering/java_tools.git") {
-        producesModule("com.alims:java_tools:1.0.0")
+        producesModule("com.alims:java_tools")
     }
 }
 ```
@@ -40,10 +40,8 @@ Then, in your `build.gradle.kts`, add:
 
 ```kotlin
 dependencies {
-    implementation("com.alims:java_tools")
+    implementation("com.alims:java_tools:1.0.0")
 }
 ```
 
 
-com.alims:java_tools:1.0.0
-```

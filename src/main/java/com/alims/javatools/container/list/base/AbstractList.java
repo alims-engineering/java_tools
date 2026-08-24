@@ -1,7 +1,10 @@
 package com.alims.javatools.container.list.base;
 
+import com.alims.javatools.container.list.interfaces.List;
+
 public abstract class AbstractList<E>
-        extends java.util.AbstractList<E> {
+        extends java.util.AbstractList<E>
+        implements List<E> {
 
     private int size;
 

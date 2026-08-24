@@ -7,5 +7,4 @@ public interface SingleAnchoredLinkedList<
         Node extends ConnectableNode<V, Node>//
         > extends AnchoredLinkedList<V, Node> {
 
-    Node getAnchor();
 }

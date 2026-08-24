@@ -1,13 +1,13 @@
 package com.alims.javatools.container.list.base;
 
 import com.alims.javatools.container.list.interfaces.AnchoredSinglyLinkedList;
-import com.alims.javatools.container.list.interfaces.SingleAnchoredLinkedList;
+import com.alims.javatools.container.list.interfaces.DualAnchoredLinkedList;
 import com.alims.javatools.container.node.interfaces.SingleConnectableNode;
 
 /*
- * AbstractSingleAnchoredSinglyLinkedList<E, Node>
+ * AbstractDualAnchoredSinglyLinkedList<E, Node>
  *          |
- *          +-- implements SingleAnchoredLinkedList<E, Node>
+ *          +-- implements DualAnchoredLinkedList<E, Node>
  *          |
  *          +-- implements AnchoredSinglyLinkedList<E, Node>
  *          |
@@ -20,26 +20,28 @@ import com.alims.javatools.container.node.interfaces.SingleConnectableNode;
  *          v
  * java.util.AbstractList<E>
  */
-public abstract class AbstractSingleAnchoredSinglyLinkedList<
+public abstract class AbstractDualAnchoredSinglyLinkedList<
         E,
         Node extends SingleConnectableNode<E, Node>
         >
         extends AbstractAnchoredLinkedList<E, Node>
         implements
-                SingleAnchoredLinkedList<E, Node>,
+                DualAnchoredLinkedList<E, Node>,
                 AnchoredSinglyLinkedList<E, Node> {
 
     // ====================================
     // Field
     // ====================================
 
-    protected Node anchor;
+    protected Node firstAnchor;
+
+    protected Node secondAnchor;
 
     // ====================================
     // Constructor
     // ====================================
 
-    protected AbstractSingleAnchoredSinglyLinkedList() {
+    protected AbstractDualAnchoredSinglyLinkedList() {
     }
 
     // ====================================
@@ -59,6 +61,14 @@ public abstract class AbstractSingleAnchoredSinglyLinkedList<
         }
 
         /*
+         * Insert at last position.
+         */
+        if (index == size()) {
+            addLast(element);
+            return;
+        }
+
+        /*
          * Find previous node.
          */
         Node previous = getNode(index - 1);
@@ -72,21 +82,17 @@ public abstract class AbstractSingleAnchoredSinglyLinkedList<
         /*
          * Disconnect previous -> next.
          */
-        if (next != null) {
-            previous.disconnect(next);
-        }
-
-        /*
-         * Connect newNode -> next.
-         */
-        if (next != null) {
-            newNode.connect(next);
-        }
+        previous.disconnect(next);
 
         /*
          * Connect previous -> newNode.
          */
         previous.connect(newNode);
+
+        /*
+         * Connect newNode -> next.
+         */
+        newNode.connect(next);
 
         increaseSize();
     }
@@ -110,10 +116,17 @@ public abstract class AbstractSingleAnchoredSinglyLinkedList<
         checkElementIndex(index);
 
         /*
-         * Remove first node.
+         * Remove first position.
          */
         if (index == 0) {
             return removeFirst();
+        }
+
+        /*
+         * Remove last position.
+         */
+        if (index == size() - 1) {
+            return removeLast();
         }
 
         /*
@@ -132,14 +145,12 @@ public abstract class AbstractSingleAnchoredSinglyLinkedList<
         /*
          * Connect previous -> next.
          */
-        if (next != null) {
-            previous.connect(next);
+        previous.connect(next);
 
-            /*
-             * Disconnect removed -> next.
-             */
-            removed.disconnect(next);
-        }
+        /*
+         * Disconnect removed -> next.
+         */
+        removed.disconnect(next);
 
         decreaseSize();
 
@@ -155,13 +166,22 @@ public abstract class AbstractSingleAnchoredSinglyLinkedList<
         Node newNode = createNode(element);
 
         /*
-         * Connect newNode -> anchor.
+         * Empty list.
          */
-        if (anchor != null) {
-            newNode.connect(anchor);
+        if (firstAnchor == null) {
+            firstAnchor = newNode;
+            secondAnchor = newNode;
+
+            increaseSize();
+            return;
         }
 
-        anchor = newNode;
+        /*
+         * Connect newNode -> firstAnchor.
+         */
+        newNode.connect(firstAnchor);
+
+        firstAnchor = newNode;
 
         increaseSize();
     }
@@ -170,21 +190,49 @@ public abstract class AbstractSingleAnchoredSinglyLinkedList<
     public E getFirst() {
         checkElementIndex(0);
 
-        return anchor.getValue();
+        return firstAnchor.getValue();
     }
 
     @Override
     public E setFirst(E element) {
         checkElementIndex(0);
 
-        return anchor.setValue(element);
+        return firstAnchor.setValue(element);
     }
 
     @Override
     public E removeFirst() {
         checkElementIndex(0);
 
-        return removeAnchor();
+        Node removed = firstAnchor;
+
+        /*
+         * Single-node list.
+         */
+        if (firstAnchor == secondAnchor) {
+            firstAnchor = null;
+            secondAnchor = null;
+
+            decreaseSize();
+
+            return removed.getValue();
+        }
+
+        Node next = removed.getConnection();
+
+        /*
+         * Move first anchor.
+         */
+        firstAnchor = next;
+
+        /*
+         * Disconnect removed -> next.
+         */
+        removed.disconnect(next);
+
+        decreaseSize();
+
+        return removed.getValue();
     }
 
     // ====================================
@@ -193,28 +241,79 @@ public abstract class AbstractSingleAnchoredSinglyLinkedList<
 
     @Override
     public void addLast(E element) {
-        add(size(), element);
+        Node newNode = createNode(element);
+
+        /*
+         * Empty list.
+         */
+        if (secondAnchor == null) {
+            firstAnchor = newNode;
+            secondAnchor = newNode;
+
+            increaseSize();
+            return;
+        }
+
+        /*
+         * Connect secondAnchor -> newNode.
+         */
+        secondAnchor.connect(newNode);
+
+        secondAnchor = newNode;
+
+        increaseSize();
     }
 
     @Override
     public E getLast() {
         checkElementIndex(size() - 1);
 
-        return getNode(size() - 1).getValue();
+        return secondAnchor.getValue();
     }
 
     @Override
     public E setLast(E element) {
         checkElementIndex(size() - 1);
 
-        return getNode(size() - 1).setValue(element);
+        return secondAnchor.setValue(element);
     }
 
     @Override
     public E removeLast() {
         checkElementIndex(size() - 1);
 
-        return remove(size() - 1);
+        Node removed = secondAnchor;
+
+        /*
+         * Single-node list.
+         */
+        if (firstAnchor == secondAnchor) {
+            firstAnchor = null;
+            secondAnchor = null;
+
+            decreaseSize();
+
+            return removed.getValue();
+        }
+
+        /*
+         * Find the node before secondAnchor.
+         */
+        Node previous = getNode(size() - 2);
+
+        /*
+         * Disconnect previous -> removed.
+         */
+        previous.disconnect(removed);
+
+        /*
+         * Move second anchor.
+         */
+        secondAnchor = previous;
+
+        decreaseSize();
+
+        return removed.getValue();
     }
 
     // ====================================
@@ -222,35 +321,12 @@ public abstract class AbstractSingleAnchoredSinglyLinkedList<
     // ====================================
 
     /**
-     * Removes the anchor node and returns its value.
-     *
-     * The caller must ensure that the list is not empty.
-     */
-    protected E removeAnchor() {
-        Node removed = anchor;
-        Node next = removed.getConnection();
-
-        anchor = next;
-
-        /*
-         * Disconnect removed -> next.
-         */
-        if (next != null) {
-            removed.disconnect(next);
-        }
-
-        decreaseSize();
-
-        return removed.getValue();
-    }
-
-    /**
      * Returns the node at the specified index.
      *
      * The caller must ensure that the index is valid.
      */
     protected Node getNode(int index) {
-        Node current = anchor;
+        Node current = firstAnchor;
 
         for (int i = 0; i < index; i++) {
             current = current.getConnection();
