@@ -1,12 +1,19 @@
-# java_tools
+# ☕ java_tools
 
-A Java library that can be used directly as a Gradle Git source dependency.
+A reusable Java library that can be integrated into your project using either:
 
-## How to use
+* **Gradle Git Source Dependency**
+* **Direct Git Clone**
 
-### Gradle Groovy DSL
+---
 
-In your `settings.gradle`, add:
+# 🚀 Gradle Git Source Dependency
+
+## Groovy DSL
+
+### Step 1 — Configure the Git Repository
+
+Add the following to your `settings.gradle`:
 
 ```groovy
 sourceControl {
@@ -16,7 +23,9 @@ sourceControl {
 }
 ```
 
-Then, in your `build.gradle`, add:
+### Step 2 — Add the Dependency
+
+Add the following to your `build.gradle`:
 
 ```groovy
 dependencies {
@@ -24,9 +33,13 @@ dependencies {
 }
 ```
 
-### Gradle Kotlin DSL
+---
 
-If your `settings.gradle.kts`, add:
+## Kotlin DSL
+
+### Step 1 — Configure the Git Repository
+
+Add the following to your `settings.gradle.kts`:
 
 ```kotlin
 sourceControl {
@@ -36,7 +49,9 @@ sourceControl {
 }
 ```
 
-Then, in your `build.gradle.kts`, add:
+### Step 2 — Add the Dependency
+
+Add the following to your `build.gradle.kts`:
 
 ```kotlin
 dependencies {
@@ -44,4 +59,43 @@ dependencies {
 }
 ```
 
+---
+
+# 📥 Git Clone
+
+You can also clone `java_tools` directly into your local development environment.
+
+## 🐧 Linux
+
+Clone the repository:
+
+```bash
+git clone https://github.com/alims-engineering/java_tools.git "/Alims/engineering/java_tools"
+```
+
+Then include the project in your build configuration.
+
+---
+
+## 🪟 Windows
+
+Clone the repository:
+
+```bash
+git clone https://github.com/alims-engineering/java_tools.git "C:/Alims/engineering/java_tools"
+```
+
+Then include the project in your build configuration.
+
+---
+
+# 📦 Dependency Information
+
+| Property | Value        |
+| -------- | ------------ |
+| Group    | `com.alims`  |
+| Artifact | `java_tools` |
+| Version  | `1.0.0`      |
+
+---
 
