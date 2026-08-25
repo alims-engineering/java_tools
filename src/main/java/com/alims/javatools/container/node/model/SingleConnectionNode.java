@@ -4,9 +4,12 @@ import com.alims.javatools.container.node.base.AbstractSingleConnectionNode;
 
 public class SingleConnectionNode<V>
         extends AbstractSingleConnectionNode<
-                V,
-                SingleConnectionNode<V>
-                > {
+                V, ////
+                SingleConnectionNode<V>//
+        > {
+    // ====================================
+    // Constructor
+    // ====================================
 
     public SingleConnectionNode(V value) {
         super(value);

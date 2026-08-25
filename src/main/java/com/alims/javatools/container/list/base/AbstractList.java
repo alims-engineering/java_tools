@@ -4,9 +4,10 @@ import com.alims.javatools.container.list.interfaces.List;
 
 public abstract class AbstractList<E>
         extends java.util.AbstractList<E>
-        implements List<E> {
+        implements List<E>, java.io.Serializable {
 
-    private int size;
+    private static final long serialVersionUID = 1L;
+    protected int size;
 
     // ====================================
     //  Constructor

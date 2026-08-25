@@ -1,6 +1,11 @@
 package com.alims.javatools.container.node.base;
 
 import com.alims.javatools.container.node.interfaces.Node;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -107,5 +112,37 @@ class AbstractNodeTest {
                 node.createSelf("World");
 
         assertInstanceOf(TestNode.class, newNode);
+    }
+
+    @Test
+    void shouldSerializeAndDeserializeSuccessfully()
+            throws IOException, ClassNotFoundException {
+
+        TestNode<String> original =
+                new TestNode<>("Hello");
+
+        ByteArrayOutputStream byteOutput =
+                new ByteArrayOutputStream();
+
+        try (ObjectOutputStream output =
+                     new ObjectOutputStream(byteOutput)) {
+
+            output.writeObject(original);
+        }
+
+        TestNode<String> restored;
+
+        try (ObjectInputStream input =
+                     new ObjectInputStream(
+                             new ByteArrayInputStream(
+                                     byteOutput.toByteArray()))) {
+
+            restored = (TestNode<String>) input.readObject();
+        }
+
+        assertNotNull(restored);
+        assertEquals("Hello", restored.getValue());
+
+        assertNotSame(original, restored);
     }
 }
